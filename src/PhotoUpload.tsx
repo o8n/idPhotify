@@ -15,7 +15,7 @@ const PhotoUpload: React.FC<PhotoUploadProps> = ({ onPhotoUpload }) => {
   return (
     <Button variant="contained" component="label">
       写真をアップロード
-      <input type="file" hidden onChange={handleChange} />
+      <input type="file" hidden onChange={handleChange} accept="image/*" />
     </Button>
   );
 };
