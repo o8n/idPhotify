@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Container, Typography } from '@mui/material';
+import PhotoUpload from './PhotoUpload';
+import PhotoPreview from './PhotoPreview';
 
-function App() {
+const App = () => {
+  const [uploadedPhoto, setUploadedPhoto] = useState<File | null>(null);
+
+  const handlePhotoUpload = (photo: File) => {
+    setUploadedPhoto(photo);
+  };
+
+  const handleDownload = (photo: string) => {
+    const link = document.createElement('a');
+    link.href = photo;
+    link.download = 'id_photo.png';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Typography variant="h4" gutterBottom>証明写真作成サービス</Typography>
+      <PhotoUpload onPhotoUpload={handlePhotoUpload} />
+      {uploadedPhoto && <PhotoPreview photo={uploadedPhoto} onGeneratePhoto={handleDownload} />}
+    </Container>
   );
-}
+};
 
 export default App;
